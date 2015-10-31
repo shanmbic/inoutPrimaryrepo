@@ -15,7 +15,9 @@ class Messages(models.Model):
 	user = models.OneToOneField(UserProfile)
 	timestamp = models.DateField(blank=True)
 
-class Medicines(models.Model):
-	name = models.CharField(max_length=30)
-	disease_associated = 
+class Documents(models.Model):
+	name = models.CharField(max_length=3000)
+	user_belong = models.OneToOneField(UserProfile)
+	user_shared = models.OneToOneField(UserProfile)
+	url = models.CharField(max_length=100)
 

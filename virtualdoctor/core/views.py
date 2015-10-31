@@ -1,6 +1,4 @@
 from django.shortcuts import render
-
-# Create your views here.
 from django.core.context_processors import request  
 from django.contrib.auth.models import User
 from romeocore.models import UserProfile, Messages
@@ -10,7 +8,11 @@ from django.http import HttpResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 import requests
+import dropbox
+import datetime
 # Create your views here.
+dropbox_appsecret = ''
+dropbox_appkey = ''
 
 
 def user_login(request):
@@ -133,7 +135,21 @@ def get_doctors(request):
 		else:
 			return HttpResponse('Login as HEALTH_WORKER', status=400, content_type='text/plain')
 
-
-data = {"model_id": "en-fr","source": "en", "target": "es","text": ["My name is"]}
-
-data = {"languages": ["Hello"]}
+@login_required
+def speech_to_text(request):
+	if request.methof == 'POST':
+		url = 'https://stream.watsonplatform.net/speech-to-text/api/v1/recognize'
+		headers = {'Content-Type':'audio/wav', 'en-US_BroadbandModel', 'max_alternatives':1, 'inactivity_timeout':30, 'X-WDC-PL-OPT-OUT':1}
+		data = request.method['MEDIA']
+		user_posting = requests.META['username']
+		user_shared = requests.POST['user_share']
+		r = requests.post(url, auth=('fb3270c3-ea38-4845-8d69-eb4f986dfad4','iX5Uck7KpsqB'), data=data, headers=headers).json()
+		r=dict(r)
+		text=r["results"][0]["alternatives"][0]["transcript"]
+		flow = dropbox.client.DropboxOAuth2FlowNoRedirect(dropbox_appkey, dropbox_appsecret)
+		code = "auth_code"
+		access_token, user_id = flow.finish(code)
+		client = dropbox.client.DropboxClient(access_token)
+		response = client.put_file('/'+user_posting+user_share+datetime.datetimenow()+'.txt', text)
+		share_url = client.share('/'+user_posting+user_share+datetime.datetimenow()+'.txt', short_url=False)
+		return HttpResponse(share_url, status=200,content_type='text/plain')
