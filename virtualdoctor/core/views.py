@@ -92,7 +92,17 @@ def logout(request):
 	except:
 		return HttpResponse('Please login', status=500, content_type='text/plain')
 
-
+@login_required
+def askquestion(request):
+	if request.method == 'POST':
+		user = request.META['username']
+		if user.type_user == 'HEALTH_WORKER':
+			question_type = request.POST['question_type']
+			question = request.POST['question']
+			headers = {'Content-Type':'application/json'}
+			data = {"question": {"questionText":question}}
+			r = request.post(url='https://gateway.watsonplatform.net/question-and-answer-beta/api/v1/question/{healthcare}/', auth=("05ed1923-b4e5-4c92-bb92-c5c25dc0404e","amfepk6cPdDO"), headers=headers, data=json.dumps(data)).json()
+			x=str(r[0]['question']['evidencelist'][10]['text'])
 
 
 
