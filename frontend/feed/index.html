@@ -7,6 +7,7 @@
 
 	<link rel="shortcut icon" href="img/favicon.ico"> 
 	<link rel="stylesheet" href="css/vendor/fluidbox.min.css">
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" href="css/main.css">
 
 	<title>Local Feed</title>
@@ -16,39 +17,19 @@
 
 
 	<header>
-
-		<div id="logo-container">
+		<div id="logo-container" style="margin-left:30%">
 			<div id="logo"><a href="">INOUT HACK APP</a></div>
-			<div id="subtitle">Your local information</div>
+			<div style="margin-left:20%" id="subtitle">Your local information</div>
 		</div>
-
 	</header>
+	<br /> <br />
 
 	<div id="content">
-
+		<div class="row">
+		<div class="col-md-6"> <!--local news feed will appear here-->
 		<section class="intro">
-			<h1>Hello, <span class="nl"></span>we are here to help you.</h1>
-			<p>
-				This is your local news feed. Here you can share and view all the events that are happenning around you. Feel free to share anything, and others will be able to view that instantly. Click on view feed to get what others are sharing around you.
-			</p>
-		</section>
-
-		<!-- Form here-->
-		<section class="row">
-			<div class="col-full">
-				<div id="text">Title</div> <br />
-				<input type="text" name="text" /><br /><br />
-				<div id="text">Share</div> <br />
-				<textarea></textarea>
-
-				<br /><br />
-				<div id="text">Submit</div> <br /> <input type="submit" name="submit" /> 
-			</div>
-		</section>	
-		<!-- Form ends here-->
-
-
-			<div id="feedButton" style="margin-left:25%; background: whitesmoke; padding: 25px;border: 0;
+			<h3>Hello, <span class="nl"></span>we are here to help you.</h3> <br />
+			<div id="feedButton" style="background: whitesmoke; padding: 25px;border: 0;
 			            border-radius: 36px;
 			  			color: black;
 					    cursor: pointer;
@@ -68,8 +49,36 @@
 				</p>
 			</div>
 		</section>
+
+		</section>
+		</div>
+
+		<!-- In this section, user will share his story-->
+		<div id="logo-container">
+			<div id="logo"  style="margin-left:50%"><h3>Share your story</h3></div>
+		</div>
+		<div class="col-md-6">
+		<section class="row">
+			<div class="col-full">
+				<div id="text">Title</div> <br />
+				<input type="text" name="text" /><br /><br />
+				<div id="text">Share</div> <br />
+				<textarea></textarea>
+
+				<br /><br />
+				<div id="text">Submit</div> <br /> <input type="submit" name="submit" /> 
+			</div>
+		</section>	
+		<!-- Form ends here-->
+
+
+			
+		</div>
+		</div>
+
 		
-		<div id="distressButton" style="margin-left:25%; background: whitesmoke; padding: 25px;border: 0;
+		<!-- This is for row wise-->
+		<div id="distressButton" style="margin-left:35%; background: whitesmoke; padding: 25px;border: 0;
 			            border-radius: 36px;
 			  			color: black;
 					    cursor: pointer;
