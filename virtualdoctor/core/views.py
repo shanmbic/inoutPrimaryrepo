@@ -68,9 +68,19 @@ def search_users(request):
 
 @login_required
 def search_messages(request):
+	data = []
 	if request.method == 'POST':
-		location = request.POST['location']
-		messages = Messages.objects.filter(user__current_location==location)
+		username = request.META['username']
+		user = UserProfile.objects.get(username=username)
+		user_location = user.current_location
+		messages = Messages.objects.filter(user__current_location==user_location)
+		for item in messages:
+			data.append({'username':item.username, 'content':item.content, 'timestamp':item.timestamp})
+		return HttpResponse(json.dumps(data), mimetype='application/json')
+	else:
+		return HttpResponse('Login Required', status=400, content_type='text/plain' )
+
+
 
 @login_required
 def push_messages(request):
@@ -103,7 +113,27 @@ def askquestion(request):
 			data = {"question": {"questionText":question}}
 			r = request.post(url='https://gateway.watsonplatform.net/question-and-answer-beta/api/v1/question/{healthcare}/', auth=("05ed1923-b4e5-4c92-bb92-c5c25dc0404e","amfepk6cPdDO"), headers=headers, data=json.dumps(data)).json()
 			x=str(r[0]['question']['evidencelist'][10]['text'])
+			return HttpResponse(x, status=200, content_type='text/plain')
+		else:
+			return HttpResponse('Login as HEALTH_WORKER', status=400, content_type='text/plain')
+	else:
+		return HttpResponse('Login to continue', status=400, content_type='text/plain')
 
 
+@login_required
+def get_doctors(request):
+	data=[]
+	if request.method == 'POST':
+		user = request.META['username']
+		if user.type_user == 'HEALTH_WORKER':
+			users = UserProfile.objects.filter(current_location==user.current_location, type_user=='DOCTOR')
+			for item in users:
+				data.append({'name':str(item.name), 'phone':item.phone})
+			return HttpResponse(json.dumps(data), mimetype='application/json')
+		else:
+			return HttpResponse('Login as HEALTH_WORKER', status=400, content_type='text/plain')
 
 
+data = {"model_id": "en-fr","source": "en", "target": "es","text": ["My name is"]}
+
+data = {"languages": ["Hello"]}
