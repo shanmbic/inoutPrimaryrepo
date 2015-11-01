@@ -57,8 +57,8 @@ $("#ques").click(function(){
         
         var ques = $('#questxt').val();
         console.log(ques);
-        var BaseUrl="http://localhost:8000/query/";
-        $.post( "http://localhost:8000/query/", { 'question': ques })
+        var BaseUrl="http://virtualdoctor.mybluemix.net/query/";
+        $.post( "http://virtualdoctor.mybluemix.net/query/", { 'question': ques })
   .done(function( data ) {
     alert( "Data Loaded: " + data );
     var ans=$('#postanswer');
