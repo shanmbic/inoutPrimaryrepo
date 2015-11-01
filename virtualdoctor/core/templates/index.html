@@ -1,0 +1,130 @@
+<!doctype html>
+{% load staticfiles %}
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="{% static "css/_reset.css" %}"> <!-- CSS reset -->
+	<link rel="stylesheet" href="{% static "css/_style.css" %}"> <!-- Resource style -->
+	<script src="{% static "js/modernizr.js" %}"></script> <!-- Modernizr -->
+  	
+	<title>Dashboard | Virtual Doctor</title>
+</head>
+<body>
+<header>
+	<h1>Welcome to your Dashboard</h1>
+</header>
+<div class="cd-tabs">
+	<nav>
+		<ul class="cd-tabs-navigation">
+			<li><a data-content="inbox" class="selected" href="#0">Feed</a></li>
+			<li><a data-content="Emergency" href="#0">Emergency</a></li>
+			<li><a data-content="Disease Prediction" href="#0">Disease prediction</a></li>
+			<li><a data-content="store" href="#0">Store</a></li>
+			<li><a data-content="About" href="#0">About</a></li>
+			<li><a data-content="trash" href="#0">Trash</a></li>
+		</ul> <!-- cd-tabs-navigation -->
+	</nav>
+
+	<ul class="cd-tabs-content">
+		<li data-content="inbox" class="selected">
+		<h3 style="color:#000">Get emergency messages from users in your location</h3> <br />
+		<div id="feedButton" style="background: whitesmoke; padding: 25px;border: 0;
+			            border-radius: 36px;
+			  			color: black;
+					    cursor: pointer;
+					    display: inline-block;
+					    font-size: 18px;
+					    padding: 12px 45px;
+			  			text-align: center;">
+			  			Get my local Feed		
+			</div>
+		</li>
+
+		<li data-content="Emergency">
+		<div id="distressButton" style="background: whitesmoke; padding: 25px;border: 10;
+			            border-radius: 36px;
+			  			color: black;
+					    cursor: pointer;
+					    display: inline-block;
+					    font-size: 18px;
+					    padding: 12px 45px;
+			  			text-align: center;">
+			  			Generate a Distress call
+			</div> <br /><br /><br />
+			<h3 style="color:#000">Send emergency message</h3> <br /><br />
+			
+			<form method="post", action="">
+				<div style="color:#000">Title</div> <br />
+				<input type="text" name="text" /><br /><br />
+				<div style="color:#000">Share</div> <br />
+				<textarea></textarea>
+
+				<br /><br />
+				<div style="color:#000">Submit</div> <br /> <input type="submit" name="submit" />
+				
+			</form>
+
+		</li>
+
+		<li data-content="Disease Prediction">
+			<h2 style="color:#000 ;font-size:24px">When the doctor is not available, we provide a virtual doctor which can respond to your queries.</h2><br />
+			<p style="color:#000 ;font-size:24px">Ask Questions like</p>
+		
+			<p style="margin-left:2%">If i have have the following symptoms, predict the disease?</p>
+			<p style="margin-left:2%">What are the symptoms of a following disease?</p>
+			<p style="margin-left:2%">How can particular disease be prevented or cured?</p>
+		
+	
+			<h3 style="color:#000">Post your symptoms and questions</h3>
+			<br />
+			<textarea name="question"></textarea> <br /> <br />
+			<div id="ques" style="background: whitesmoke; padding: 25px;border: 10;
+			            border-radius: 36px;
+			  			color: black;
+					    cursor: pointer;
+					    width:145px;
+					    display: inline-block;
+					    font-size: 18px;
+					    padding: 12px;
+			  			text-align: center;">
+			  			Post
+			</div>
+		</li>
+
+		<li data-content="store">
+			<h2 style="color:#000 ;font-size:24px"></h2>
+			<div id="recordButton" style="background: whitesmoke; padding: 25px;border: 10;
+			            border-radius: 36px;
+			  			color: black;
+					    cursor: pointer;
+					    display: inline-block;
+					    font-size: 18px;
+					    padding: 12px 45px;
+			  			text-align: center;"> 
+			  			<a href="recordSound.html">Record a patient's voice</a>
+			</div> <br /><br /><br />
+		</li>
+
+		<li data-content="About">
+			<p>We are developing a web application as a virtual doctor for rural people where medical facilities are not available easily. Rural areas usually lack some basic facilities like proper communication infrastructure, proper medical care etc. Sometimes its becomes very hard for the patients to get a proper treatment because of lack of awareness. So our application helps in overcoming all these challenges. Its very user friendly, easy to use and works in limited or slow connectivity.</p>
+
+			<p>Usually the problem starts when the doctors are not available. In such cases, villages usually have some medical worker or a medical helper who provides them medical care. Village people can help each other as a community in the first place. Our application shows all the emergency messages posted by other users. Any person can also post his problem such that anybody can help him. HE can also send distress calls to any medical worker, which in turn can set up his meeting with a doctor. In case of slow connection, our application converts text to speech and sends it as a text message. If the doctor is unavailable, we can refer to a virtual doctor which can respond to a patient's problems and provide solutions. It uses machine learning for that.</p>
+		</li>
+
+		<li data-content="trash">
+			<p>Trash Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque a iure nostrum animi praesentium, numquam quidem, nemo, voluptatem, aspernatur incidunt. Fugiat aspernatur excepturi fugit aut, dicta reprehenderit temporibus, nobis harum consequuntur quo sed, illum.</p>
+
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima doloremque optio tenetur, natus voluptatum error vel dolorem atque perspiciatis aliquam nemo id libero dicta est saepe laudantium provident tempore ipsa, accusamus similique laborum, consequatur quia, aut non maiores. Consectetur minus ipsum aliquam pariatur dolorem rerum laudantium minima perferendis in vero voluptatem suscipit cum labore nemo explicabo, itaque nobis debitis molestias officiis? Impedit corporis voluptates reiciendis deleniti, magnam, fuga eveniet! Velit ipsa quo labore molestias mollitia, quidem, alias nisi architecto dolor aliquid qui commodi tempore deleniti animi repellat delectus hic. Alias obcaecati fuga assumenda nihil aliquid sed vero, modi, voluptatem? Vitae voluptas aperiam nostrum quo harum numquam earum facilis sequi. Labore maxime laboriosam omnis delectus odit harum recusandae sint incidunt, totam iure commodi ducimus similique doloremque! Odio quaerat dolorum, alias nihil quam iure delectus repellendus modi cupiditate dolore atque quasi obcaecati quis magni excepturi vel, non nemo consequatur, mollitia rerum amet in. Nesciunt placeat magni, provident tempora possimus ut doloribus ullam!</p>
+		</li>
+	</ul> <!-- cd-tabs-content -->
+</div> <!-- cd-tabs -->
+
+<script src="{% static "js/jquery-2.1.1.js" %}"></script>
+<script src="{% static "js/main.js" %}"></script>
+<script src="{% static "js/_main.js" %}"></script> <!-- Resource jQuery -->
+</body>
+</html>

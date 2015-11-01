@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.core.context_processors import request  
 from django.contrib.auth.models import User
-from romeocore.models import UserProfile, Messages
+from core.models import UserProfile, Messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 import json
+from django.shortcuts import render_to_response  
 from django.views.decorators.csrf import csrf_exempt
 import requests
 import dropbox
@@ -14,21 +15,27 @@ import datetime
 dropbox_appsecret = ''
 dropbox_appkey = ''
 
-
+@csrf_exempt 
 def user_login(request):
-	context = RequestContext(request)
 	if request.method == 'POST':
-		username = request.POST['username']
-		password = request.POST['password']
-		user = authenticate(username=username, password=password)
-		if user:
-			return HttpResponse(status=201)
-		else:
-			return HttpResponse(status=400)
+		try:
+			data = request.POST
+			username = data['username']
+			password = data['password']
+			user = authenticate(username=username, password=password)
+			print user
+			if user:
+				login(request, user)
+				return render_to_response('index.html')
+			else:
+				return HttpResponse(status=400)
+		except Exception, e:
+			print e
 
 @csrf_exempt 
 def register(request):
-	#print request
+	if request.method == 'GET':
+		return render_to_response('signup.html')
 	if request.method == 'POST':
 		data = json.loads(request.body)
 		try:
@@ -39,15 +46,20 @@ def register(request):
 			repassword = data['repassword']
 			lat = data['lat']
 			lon = data['lon']
-			r=requests.get(url='https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lon+'&key=AIzaSyD2PEgdYwVh8FcdHEVWb0vg05pJm--RXHk').json()
+			r=requests.get(url='https://maps.googleapis.com/maps/api/geocode/json?latlng='+str(lat)+','+str(lon)+'&key=AIzaSyD2PEgdYwVh8FcdHEVWb0vg05pJm--RXHk').json()
 			r=dict(r)
-			location=r["results"][0]["address_components"][5]["long_name"]
-			type_user = data['user_type']
+			for x in r["results"][0]["address_components"]:
+				if x["types"][0]=='administrative_area_level_1':
+					location = x["long_name"]
+			print location
+			type_user = data['usertype']
 			phone = data['phone']
 			if password == repassword:				
 				try:
-					user = User.objects.create_user(username, password, email)
-				except:
+					user = User.objects.create_user(username=username, password=password, email=email)
+					user.save()
+				except Exception,e:
+					print e
 					return HttpResponse('Username already exists', status=500, content_type='text/plain')
 				profile = UserProfile.objects.create(user=user, name=name, phone=phone,  current_location=location, type_user=type_user)
 				return HttpResponse(status=200)
@@ -104,6 +116,7 @@ def logout(request):
 	except:
 		return HttpResponse('Please login', status=500, content_type='text/plain')
 
+
 @login_required
 def askquestion(request):
 	if request.method == 'POST':
@@ -137,9 +150,9 @@ def get_doctors(request):
 
 @login_required
 def speech_to_text(request):
-	if request.methof == 'POST':
+	if request.method == 'POST':
 		url = 'https://stream.watsonplatform.net/speech-to-text/api/v1/recognize'
-		headers = {'Content-Type':'audio/wav', 'en-US_BroadbandModel', 'max_alternatives':1, 'inactivity_timeout':30, 'X-WDC-PL-OPT-OUT':1}
+		headers = {'Content-Type':'audio/wav', 'model':'en-US_BroadbandModel', 'max_alternatives':1, 'inactivity_timeout':30, 'X-WDC-PL-OPT-OUT':1}
 		data = request.method['MEDIA']
 		user_posting = requests.META['username']
 		user_shared = requests.POST['user_share']
