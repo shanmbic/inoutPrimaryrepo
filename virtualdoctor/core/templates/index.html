@@ -23,7 +23,7 @@
 			<li><a data-content="inbox" class="selected" href="#0">Feed</a></li>
 			<li><a data-content="Emergency" href="#0">Emergency</a></li>
 			<li><a data-content="Disease Prediction" href="#0">Disease prediction</a></li>
-			<li><a data-content="store" href="#0">Store</a></li>
+			<li><a data-content="Generate Log" href="#0">Generate Log</a></li>
 			<li><a data-content="About" href="#0">About</a></li>
 			<li><a data-content="trash" href="#0">Trash</a></li>
 		</ul> <!-- cd-tabs-navigation -->
@@ -70,7 +70,7 @@
 
 		</li>
 
-		<li data-content="Disease Prediction">
+		<li id ="postanswer" data-content="Disease Prediction">
 			<h2 style="color:#000 ;font-size:24px">When the doctor is not available, we provide a virtual doctor which can respond to your queries.</h2><br />
 			<p style="color:#000 ;font-size:24px">Ask Questions like</p>
 		
@@ -81,7 +81,7 @@
 	
 			<h3 style="color:#000">Post your symptoms and questions</h3>
 			<br />
-			<textarea name="question"></textarea> <br /> <br />
+			<textarea id="questxt" name="question"></textarea> <br /> <br />
 			<div id="ques" style="background: whitesmoke; padding: 25px;border: 10;
 			            border-radius: 36px;
 			  			color: black;
@@ -95,7 +95,7 @@
 			</div>
 		</li>
 
-		<li data-content="store">
+		<li data-content="Generate Log">
 			<h2 style="color:#000 ;font-size:24px"></h2>
 			<div id="recordButton" style="background: whitesmoke; padding: 25px;border: 10;
 			            border-radius: 36px;

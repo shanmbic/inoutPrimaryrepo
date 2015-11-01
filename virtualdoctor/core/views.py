@@ -62,7 +62,7 @@ def register(request):
 					print e
 					return HttpResponse('Username already exists', status=500, content_type='text/plain')
 				profile = UserProfile.objects.create(user=user, name=name, phone=phone,  current_location=location, type_user=type_user)
-				return HttpResponse(status=200)
+				return render_to_response('index.html')
 		except Exception, e:
 			print e
 			return HttpResponse(status=400)
@@ -112,25 +112,25 @@ def push_messages(request):
 def logout(request):
 	try:
 		logout(request)
-		return HttpResponse(status=200)
+		return HttpResponseRedirect('/register/')
 	except:
-		return HttpResponse('Please login', status=500, content_type='text/plain')
+		return HttpResponseRedirect('/register/')
 
 
 @login_required
+@csrf_exempt 
 def askquestion(request):
 	if request.method == 'POST':
-		user = request.META['username']
-		if user.type_user == 'HEALTH_WORKER':
-			question_type = request.POST['question_type']
-			question = request.POST['question']
+		question = str(str(request.body).split("=")[1]).replace("%"," ").replace("+", " ")
+		try:
+			user = request.user
 			headers = {'Content-Type':'application/json'}
 			data = {"question": {"questionText":question}}
-			r = request.post(url='https://gateway.watsonplatform.net/question-and-answer-beta/api/v1/question/{healthcare}/', auth=("05ed1923-b4e5-4c92-bb92-c5c25dc0404e","amfepk6cPdDO"), headers=headers, data=json.dumps(data)).json()
+			r = requests.post(url='https://gateway.watsonplatform.net/question-and-answer-beta/api/v1/question/healthcare/', auth=("05ed1923-b4e5-4c92-bb92-c5c25dc0404e","amfepk6cPdDO"), headers=headers, data=json.dumps(data)).json()
 			x=str(r[0]['question']['evidencelist'][10]['text'])
 			return HttpResponse(x, status=200, content_type='text/plain')
-		else:
-			return HttpResponse('Login as HEALTH_WORKER', status=400, content_type='text/plain')
+		except Exception, e:
+			print e
 	else:
 		return HttpResponse('Login to continue', status=400, content_type='text/plain')
 
