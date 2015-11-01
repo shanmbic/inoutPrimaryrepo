@@ -23,9 +23,9 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 SECRET_KEY = '#j1%gi$=o59y#-vz!fm24^9(t&1)!rd#luii@5hd5(a$1o*_si'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['']
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_ROOT, 'templates').replace('\\','/'),
